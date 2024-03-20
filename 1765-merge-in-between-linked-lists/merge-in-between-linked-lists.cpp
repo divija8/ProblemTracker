@@ -14,24 +14,24 @@ public:
         ListNode* dummy = new ListNode();
         dummy->next = list1;
         
-        ListNode* temp = dummy;
+        ListNode* prevA = dummy;
         for (int i = 0; i < a; ++i) {
-            temp=temp->next;
+            prevA = prevA->next;
         }
         
-        ListNode* last = temp;
+        ListNode* prevB = prevA;
         for (int i = a; i <= b + 1; ++i) {
-            last = last->next;
+            prevB = prevB->next;
         }
         
-        ListNode* temp1 = list2;
-        while (temp1->next != NULL) {
-             temp1 = temp1->next;
+        ListNode* list2Tail = list2;
+        while (list2Tail->next != nullptr) {
+            list2Tail = list2Tail->next;
         }
         
-        temp->next = list2;
-        temp1->next = last;
+        prevA->next = list2;
+        list2Tail->next = prevB;
         
-        return list1;
+        return dummy->next;
     }
 };
