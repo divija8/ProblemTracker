@@ -1,26 +1,19 @@
 class Solution {
 public:
     bool canBeEqual(vector<int>& target, vector<int>& arr) {
-        int n = target.size();
-        int m = arr.size();
-
-        if (n != m) {
-            return false;
+        map<int,int>mp1 ;
+        map<int,int>mp2 ;
+        for(auto &x : target){
+            mp1[x]++;
         }
-
-        vector<int> map(1001, 0);
-
-        for (int i = 0; i < n; i++) {
-            map[target[i]]++;
-            map[arr[i]]--;
+        for(auto &x : arr){
+            mp2[x]++;
         }
-
-        for (int i = 0; i < n; i++) {
-            if (map[target[i]] != 0 || map[arr[i]] != 0) {
-                return false;
-            }
+        auto it2 = mp2.begin() ;
+        for(auto & it1 :mp1){
+            if(it1.first != it2->first || it1.second != it2->second)return false ;
+            it2++;
         }
-
-        return true;
+        return true ;
     }
 };
