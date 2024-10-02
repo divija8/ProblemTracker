@@ -1,20 +1,19 @@
 class Solution {
 public:
     vector<int> arrayRankTransform(vector<int>& arr) {
-        set<int>s;
-        for(int &num:arr){
-            s.insert(num);
+        vector<int>dup = arr;
+        int rank = 1;
+        sort(dup.begin(), dup.end());
+        unordered_map<int, int>cmap;
+        for(int i =0; i<dup.size();i++){
+            if(cmap.find(dup[i]) == cmap.end()){
+                cmap[dup[i]] = rank;
+                rank++;
+            }
         }
-        int rank=1;
-        unordered_map<int,int>mpp;
-        for(auto it=s.begin();it!=s.end();++it){
-            mpp[*it]=rank;
-            ++rank;
-        }
-        const int m=arr.size();
-        for(int i=0;i<m;++i){
-            arr[i]=mpp[arr[i]];
-        }
+       for(int i = 0;i<arr.size();i++){
+            arr[i] = cmap[arr[i]];
+       }
         return arr;
     }
 };
