@@ -1,41 +1,25 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin() , nums.end());    
-        if(nums.size() < 3){    
-            return {};
-        }
-        if(nums[0] > 0){        
-            return {};
-        }
-        vector<vector<int>> answer;
-        for(int i = 0 ; i < nums.size() ; ++i){     
-            if(nums[i] > 0){     
-                break;
-            }
-            if(i > 0 && nums[i] == nums[i - 1]){    
-                continue;
-            }
-            int low = i + 1 , high = nums.size() - 1;   
-            int sum = 0;
-            while(low < high){                          
-                sum = nums[i] + nums[low] + nums[high];
-                if(sum > 0){   
-                    high--;
-                } else if(sum < 0){ 
-                    low++;
-                } else {
-                    answer.push_back({nums[i] , nums[low] , nums[high]});  
-                    int last_low_occurence = nums[low] , last_high_occurence = nums[high];  
-                    while(low < high && nums[low] == last_low_occurence){   
-                        low++;
+        vector<vector<int>>ans;
+        sort(nums.begin(), nums.end());
+        for(int i = 0;i<nums.size();i++){
+            if(i == 0 || (i>0 && nums[i] != nums[i-1])){
+                int low = i+1, high = nums.size()-1, a = 0-nums[i];
+                while(low<high){
+                    if(nums[low] + nums[high] == a){
+                        ans.push_back({nums[i], nums[low], nums[high]});
+            
+                        while(low < high && nums[low] == nums[low+1])low++;
+                        while(low<high && nums[high]== nums[high-1])high--;
+                        low++, high--;
                     }
-                    while(low < high && nums[high] == last_high_occurence){
-                        high--;
-                    }
-                }
+
+                else if(nums[low] + nums[high] < a) low++;
+                else high--;
             }
         }
-        return answer;      
+    }
+    return ans;
     }
 };
