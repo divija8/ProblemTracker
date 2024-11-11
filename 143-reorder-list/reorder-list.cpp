@@ -8,43 +8,37 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-//Upvote and Comment
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        // base case : linkedlist is empty
-        if (!head) return;
-        
-        // finding the middle with the help of two pointer approach
-        ListNode *tmp = head, *half = head, *prev = NULL;
-        while (tmp->next && tmp->next->next) {
-            tmp = tmp->next->next;
-            half = half->next;
+        if ( !head or !head->next or !head->next->next) return;
+        ListNode *slow, *fast;
+        slow = head;
+        fast = head;
+        while( fast and fast->next) {
+            // ?f = curr;
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        
-        // adding one bit in case of lists with even length
-        if (tmp->next) half = half->next;
-        
-        // Now reverse the second half
-        while (half) {
-            tmp = half->next;
-            half->next = prev;
-            prev = half;
-            half = tmp;
+        ListNode *prev = nullptr, *curr = slow, *next;
+        while ( curr ) {    //start -> the point where to reverse from 
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
         }
-        half = prev;
-        
-        // After reversing the second half, let's merge both the halfes
-        while (head && half) {
-            tmp = head->next;
-            prev = half->next;
-            head->next = half;
-            half->next = tmp;
-            head = tmp;
-            half = prev;
+        ListNode* first = head, *second = prev;
+        while ( second->next ) {
+            ListNode* temp1 = first->next;
+            ListNode* temp2  = second->next;
+
+            first->next = second;
+            second->next = temp1;
+
+            first = temp1;
+            second = temp2;
         }
-        
-        // Base case : closing when we had even length arrays
-        if (head && head->next) head->next->next = NULL;
+
+        return;
     }
 };
