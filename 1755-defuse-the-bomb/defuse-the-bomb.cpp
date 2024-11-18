@@ -21,23 +21,24 @@ public:
                 j++;
             }
         } else if (k<0) {
-            int i=0, j=-1, sum = 0, idx;
-            while(i-j<=abs(k)) {
-                    idx = (j + n)%n;
-                    sum += code[idx];
-                    j--;
-            }
+           int i = 0 , j = -1, sum=0, idx;
+           while(i - j <= abs(k)){
+                idx = (j + n) %n;
+                sum += code[idx];
+                j--;
+           }
+           ans[i] = sum;
+           i++;
+           while(i<n){
+            idx = (j+1+n)%n;
+            sum -= code[idx];
+            sum += code[i-1];
+            ans[i] = sum;
+            i++;
             j++;
+           }
 
-            while(i<n) {
-                ans[i] = sum;
-                idx = (j + n)%n;
-                sum -= code[idx];
-                sum += code[i];
-
-                i++;
-                j++;
-            }
+            
         }
         
         return ans;
