@@ -4,8 +4,8 @@ public:
         vector<vector<int>>ans;
         int n = nums.size();
         for(int i = 0;i<(1<<n);i++){
-             vector<int>subans;
-            for(int j=0;j<n;j++){
+            vector<int>subans;
+            for(int j = 0;j<n;j++){
                 if(i & (1<<j)){
                     subans.push_back(nums[j]);
                 }
