@@ -10,7 +10,7 @@ public:
                 if(grid[i][j]==1){
                     int currarea = 0;
                     queue<pair<int,int>> q;
-                    grid[i][j] = 0;
+                    grid[i][j] = '-';
                     q.push({i,j});
 					
                     while(!q.empty()){
@@ -23,7 +23,7 @@ public:
                             int newy = y + v[k].second;
                             if(newx>=0 && newx<m && newy>=0 && newy<n && grid[newx][newy]==1){
                                 q.push({newx,newy});
-                                grid[newx][newy] = 0;
+                                grid[newx][newy] = '-';
                             }
                         }
                     }
