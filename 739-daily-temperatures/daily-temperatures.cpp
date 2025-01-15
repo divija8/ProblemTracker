@@ -1,17 +1,17 @@
 class Solution {
 public:
-    vector<int> dailyTemperatures(vector<int>& temperatures) {
-        int n = temperatures.size();
-        vector<int> answer(n, 0);
-        stack<int> monoStack;
-        for (int currDay = 0; currDay < n; ++currDay) {
-            while (!monoStack.empty() && temperatures[monoStack.top()] < temperatures[currDay]) {
-                int prevDay = monoStack.top();
-                monoStack.pop();
-                answer[prevDay] = currDay - prevDay;
-            }
-            monoStack.push(currDay);
+    vector<int> dailyTemperatures(vector<int>& temp) {
+      stack<pair<int, int>>st;
+      vector<int>res(temp.size(), 0);
+      for(int i = 0;i<temp.size();i++){
+        int t = temp[i];
+        while(!st.empty() && t > st.top().first){
+            auto val = st.top();
+            st.pop();
+            res[val.second] = i - val.second;
         }
-        return answer;
+        st.push({t, i});
+      }
+      return res;
     }
 };
