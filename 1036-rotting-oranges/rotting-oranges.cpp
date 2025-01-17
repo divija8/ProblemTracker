@@ -17,7 +17,7 @@ public:
         }
 
         vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        while (fresh > 0 && !q.empty()) {
+        while (fresh >0 && !q.empty()) {
             int length = q.size();
             for (int i = 0; i < length; i++) {
                 auto curr = q.front();
