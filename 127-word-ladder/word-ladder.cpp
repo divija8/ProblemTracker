@@ -31,7 +31,6 @@
 class Solution {
 public:
     int ladderLength(string start, string end, vector<string>& arr) {
-        ios_base ::sync_with_stdio(false), cin.tie(0), cout.tie(0);
         unordered_set<string>st(arr.begin(), arr.end());
         queue<pair<string, int>>q;
         q.push({start, 1});
