@@ -1,44 +1,33 @@
 class Solution {
 public:
     void solve(vector<vector<char>>& board) {
-        int rows = board.size();
-        if (rows == 0) return;
-        int cols = board[0].size();
-        queue<pair<int, int>> q;
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if ((r == 0 || r == rows - 1 || c == 0 || c == cols - 1) && board[r][c] == 'O') {
-                    q.push({r, c});
-                    board[r][c] = 'T'; 
-                }
+        if (board.size() == 0 || board[0].size() == 0) return;
+        ROWS = board.size();
+        COLS = board[0].size();
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (i == 0 || j == 0 || i == ROWS - 1 || j == COLS - 1)
+                    DFS(board, i, j);
             }
         }
-
-        vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-        while (!q.empty()) {
-            auto [r, c] = q.front();
-            q.pop();
-
-            for (auto [dr, dc] : directions) {
-                int nr = r + dr, nc = c + dc;
-
-                if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && board[nr][nc] == 'O') {
-                    q.push({nr, nc});
-                    board[nr][nc] = 'T'; // Mark as 'T'
-                }
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (board[i][j] == 'O')
+                    board[i][j] = 'X';
+                else if (board[i][j] == 'E')
+                    board[i][j] = 'O';
             }
         }
+    }
 
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (board[r][c] == 'O') {
-                    board[r][c] = 'X';
-                } else if (board[r][c] == 'T') {
-                    board[r][c] = 'O';
-                }
-            }
-        }
+private:
+    int ROWS, COLS;
+    void DFS(vector<vector<char>>& board, int i, int j) {
+        if (board[i][j] != 'O') return;
+        board[i][j] = 'E';
+        if (j < COLS - 1) DFS(board, i, j + 1);
+        if (i < ROWS - 1) DFS(board, i + 1, j);
+        if (j > 0) DFS(board, i, j - 1);
+        if (i > 0) DFS(board, i - 1, j);
     }
 };
