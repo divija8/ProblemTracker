@@ -1,12 +1,12 @@
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-         vector<int>indegree(numCourses, 0);
+        vector<int>indegree(numCourses, 0);
         vector<vector<int>> adj(numCourses);
         for(auto it : prerequisites){
-            int u = it[1];
-            int v = it[0];
-            adj[u].push_back(v);
+            int u = it[0];
+            int v = it[1];
+            adj[v].push_back(u);
         }
         for(int i = 0;i<numCourses;i++){
             for(auto it : adj[i]){
