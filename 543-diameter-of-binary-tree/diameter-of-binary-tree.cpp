@@ -31,24 +31,18 @@
 // };
 class Solution {
 public:
-    int maxDepth(TreeNode* root) {
-        if (root == NULL) {
+    int res=0;
+    int dia(TreeNode* root){
+        if(root==NULL){
             return 0;
         }
-        int leftH = maxDepth(root->left);
-        int rightH = maxDepth(root->right);
-        int maxH = max(leftH, rightH);
-        int totalH = 1 + maxH;
-        return totalH;
+        int lh=dia(root->left);
+        int rh=dia(root->right);
+        res=max(res,(lh+rh));
+        return(1 +max(lh,rh));
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        if (root == NULL) {
-            return 0;
-        }
-        int option1 = diameterOfBinaryTree(root->left);
-        int option2 = diameterOfBinaryTree(root->right);
-        int option3 = maxDepth(root->left) + maxDepth(root->right);
-        int ans = max(option1, max(option2, option3));
-        return ans;
+        dia(root);
+        return res;
     }
 };
