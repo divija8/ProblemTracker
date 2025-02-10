@@ -1,17 +1,19 @@
 class Solution {
 public:
+    void subsetgen(int i, vector<int>&ds, vector<vector<int>>&ans, vector<int>&nums){
+        if(i >= nums.size()){
+            ans.push_back(ds);
+            return;
+        }
+        ds.push_back(nums[i]);
+        subsetgen(i+1, ds, ans, nums);
+        ds.pop_back();
+        subsetgen(i+1, ds, ans, nums); 
+    }
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>>ans;
-        int n = nums.size();
-        for(int i = 0;i<(1<<n);i++){
-            vector<int>subans;
-            for(int j = 0;j<n;j++){
-                if(i & (1<<j)){
-                    subans.push_back(nums[j]);
-                }
-            }
-            ans.push_back(subans);
-        }
+        vector<int>ds;
+        subsetgen(0, ds, ans, nums);
         return ans;
     }
 };
