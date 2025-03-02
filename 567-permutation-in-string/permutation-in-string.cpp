@@ -25,9 +25,9 @@ public:
                     }
                     if(cmap.find(s2[i])!=cmap.end()){
                          cmap[s2[i]]++;
-                    if(cmap[s2[i]] == 1){
-                        count++;
-                    }
+                        if(cmap[s2[i]] == 1){
+                            count++;
+                        }
                 }
                 i++;
                 j++;
