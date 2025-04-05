@@ -1,10 +1,15 @@
 class Solution {
 public:
-    int subsetXORSum(vector<int>& nums) {
-        int res = 0;
-        for(int i = 0;i<nums.size();i++){
-            res |= nums[i];
+    int dfs(vector<int>&nums, int index, int cXOR){
+        if(index == nums.size()){
+            return cXOR;
         }
-        return res <<(nums.size()-1);
+        int take = dfs(nums, index + 1, cXOR ^ nums[index]);
+        int notTake = dfs(nums, index + 1, cXOR);
+        return take + notTake;
+
+    }
+    int subsetXORSum(vector<int>& nums) {
+        return dfs(nums, 0, 0);
     }
 };
