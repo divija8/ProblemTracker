@@ -1,55 +1,39 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-//         if (n == 0) return tasks.size();
-
-//         unordered_map<char, int> freqMap;
-//         int maxFreq = 0;
-//         int maxFreqCount = 0;
-
-//         for (char task : tasks) {
-            
-//             if (freqMap.find(task) != freqMap.end()) {
-//                 freqMap[task]++;
-//             } else {
-//                 freqMap[task] = 1; 
-//             }
-
-//             if (freqMap[task] > maxFreq) {
-//                 maxFreq = freqMap[task];
-//                 maxFreqCount = 1;
-//             } else if (freqMap[task] == maxFreq) {
-//                 maxFreqCount++;
-//             }
-//         }
-
-//         int totalIntervals = (maxFreq - 1) * (n + 1) + maxFreqCount;
-//         return max(totalIntervals, (int)tasks.size());
-        
-        
-        unordered_map<char, int>cmap;
-        priority_queue<int>pq;
-        queue<vector<int>>q;
-        for(auto i : tasks){
-            cmap[i]++;
+        vector<int> count(26, 0);
+        for (char task : tasks) {
+            count[task - 'A']++;
         }
-        for(auto i : cmap){
-            pq.push(i.second);
+        
+        priority_queue<int> maxHeap;
+        for (int cnt : count) {
+            if (cnt > 0) {
+                maxHeap.push(cnt);
+            }
         }
         int time = 0;
-        while(!q.empty() || !pq.empty()){
-            ++time;
-            if(!pq.empty()){
-                if(pq.top()-1){
-                    q.push({pq.top()-1, time+n});
+        queue<pair<int, int>>q;
+        while (!maxHeap.empty() || !q.empty()) {
+            time++;
+            
+            if (maxHeap.empty()) {
+                time = q.front().second;
+            } else {
+                int cnt = maxHeap.top() - 1;
+                maxHeap.pop();
+                if (cnt > 0) {
+                    q.push({cnt, time + n});
                 }
-                pq.pop();
             }
-            if (!q.empty() && q.front()[1] == time){
-                pq.push(q.front()[0]);
+            
+            if (!q.empty() && q.front().second == time) {
+                maxHeap.push(q.front().first);
                 q.pop();
             }
         }
+        
         return time;
+
     }
 };
