@@ -2,13 +2,23 @@ class Solution {
 public:
     int minimumOperations(vector<int>& nums) {
         int ct=0;
-        unordered_map<int,int> mp;
-        for(int i = nums.size()-1;i >= 0; i--){
+        int start = 0;
+        while(start < nums.size()){
+            unordered_set<int>seen;
+            bool dup = false;
+            for(int i = start;i< nums.size();i++){
+                if(seen.count(nums[i])){
+                    dup = true;
+                    break;
+                }
+                seen.insert(nums[i]);
+            }
+            if(!dup){
+                break;
+            }
+            start += 3;
             ct++;
-            mp[nums[i]]++;
-            if(mp.size()!=ct) break;
         }
-        int ans = (nums.size()-mp.size()+2)/3;
-        return ans;
+    return ct;
     }
 };
