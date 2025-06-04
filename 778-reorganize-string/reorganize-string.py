@@ -3,25 +3,30 @@
 
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        freq = Counter(s)
-        maxHeap = [(-count, char) for char, count in freq.items()]
-        heapq.heapify(maxHeap)
+        char_counts = Counter(s)
+        max_count, letter = 0, ''
+        for char, count in char_counts.items():
+            if count > max_count:
+                max_count = count
+                letter = char
+        if max_count > (len(s) + 1) // 2:
+            return ""
+        ans = [''] * len(s)
+        index = 0
 
-        ans = []
+        # Place the most frequent letter
+        while char_counts[letter] != 0:
+            ans[index] = letter
+            index += 2
+            char_counts[letter] -= 1
 
-        while maxHeap:
-            first_c, first_ch = heapq.heappop(maxHeap)
-            if not ans or first_ch != ans[-1]:
-                ans.append(first_ch)
-                if first_c + 1 != 0:
-                    heapq.heappush(maxHeap, (first_c + 1, first_ch))
-            else:
-                if not maxHeap:
-                    return ''
-                second_c, second_ch = heapq.heappop(maxHeap)
-                ans.append(second_ch)
-                if second_c + 1 != 0:
-                    heapq.heappush(maxHeap, (second_c + 1, second_ch))
-                heapq.heappush(maxHeap, (first_c, first_ch))
+        # Place rest of the letters in any order
+        for char, count in char_counts.items():
+            while count > 0:
+                if index >= len(s):
+                    index = 1
+                ans[index] = char
+                index += 2
+                count -= 1
 
         return ''.join(ans)
