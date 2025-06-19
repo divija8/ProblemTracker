@@ -1,32 +1,29 @@
-# from collections import Counter
-# import heapq
-
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        char_counts = Counter(s)
-        max_count, letter = 0, ''
-        for char, count in char_counts.items():
-            if count > max_count:
-                max_count = count
-                letter = char
-        if max_count > (len(s) + 1) // 2:
+        count = [0] * 26
+        for ch in s:
+            count[ord(ch) - ord('a')] += 1
+        
+        max_freq = max(count)
+        max_char = count.index(max_freq)
+        
+        if max_freq > (len(s) + 1) // 2:
             return ""
-        ans = [''] * len(s)
-        index = 0
-
-        # Place the most frequent letter
-        while char_counts[letter] != 0:
-            ans[index] = letter
-            index += 2
-            char_counts[letter] -= 1
-
-        # Place rest of the letters in any order
-        for char, count in char_counts.items():
-            while count > 0:
-                if index >= len(s):
-                    index = 1
-                ans[index] = char
-                index += 2
-                count -= 1
-
-        return ''.join(ans)
+        
+        res = [""] * len(s)
+        idx = 0
+        
+        while count[max_char] > 0:
+            res[idx] = chr(max_char + ord('a'))
+            idx += 2
+            count[max_char] -= 1
+        
+        for i in range(26):
+            while count[i] > 0:
+                if idx >= len(s):
+                    idx = 1  
+                res[idx] = chr(i + ord('a'))
+                idx += 2
+                count[i] -= 1
+        
+        return "".join(res)
