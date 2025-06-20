@@ -1,7 +1,5 @@
 class MedianFinder:
     def __init__(self):
-        # two heaps, large, small, minheap, maxheap
-        # heaps should be equal size
         self.small, self.large = [], []  
 
     def addNum(self, num: int) -> None:
