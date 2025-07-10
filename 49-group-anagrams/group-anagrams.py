@@ -7,6 +7,6 @@ class Solution:
             for ch in s1:
                 count[ord(ch) - ord('a')] += 1
             res[tuple(count)].append(s1)
-        
+        print(res)
         return list(res.values())
         
