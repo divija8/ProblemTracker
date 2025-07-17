@@ -1,31 +1,19 @@
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-
-        one = 0
-        two = 0
-        zero = 0
-
-        for e in nums:
-            if e == 0:
-                zero += 1
-            elif e == 1:
-                one += 1
-            elif e == 2:
-                two += 1
-
-        
+        c0, c1, c2 = 0, 0, 0
         for i in range(len(nums)):
-            if zero != 0:
-                nums[i] = 0
-                zero -= 1
-            elif one != 0:
-                nums[i] = 1
-                one -= 1
+            if nums[i] == 0 :
+                c0 += 1
+            elif nums[i] == 1:
+                c1 += 1
             else:
-                nums[i] = 2
-                two -= 1
+                c2 += 1
+        
+        for i in range(c0):
+            nums[i] = 0
+        for i in range(c0, c0 + c1):
+            nums[i] = 1
+        for i in range(c1 + c0, len(nums)):
+            nums[i] = 2
         
         
