@@ -1,11 +1,20 @@
 class Solution:
     def sortColors(self, nums: List[int]) -> None:
-        freq = {0 : 0, 1: 0, 2 : 0}
-        for i in nums:
-            freq[i] += 1
+        left, right = 0, len(nums) - 1
+        i = 0
 
-        index = 0
-        for i in range(3):
-            val = freq[i]
-            nums[index : index + val] = [i] * val
-            index += val
+        while i <= right:
+            if nums[i] == 0:
+                nums[i], nums[left] = nums[left], nums[i]
+                left += 1
+                i += 1
+            elif nums[i] == 2:
+                nums[i], nums[right] = nums[right], nums[i]
+                right -= 1
+            else:
+                i += 1
+        return
+
+        
+
+        
