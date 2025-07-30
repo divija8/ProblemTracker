@@ -1,2 +1,4 @@
-# Write your MySQL query statement below
-select * from Cinema where MOD(id, 2) <> 0 and description <> 'boring' order by rating DESC
+-- Write your PostgreSQL query statement below
+select * from cinema
+where description not in ('boring') and MOD(id, 2) = 1
+order by rating DESC
